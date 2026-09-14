@@ -1,5 +1,6 @@
 import tkinter as tk
 import math
+import logica
 
 class Grafo:
     def __init__(self,ventana):
@@ -101,9 +102,6 @@ class Grafo:
                 text=v
             )
 
-    def entregarGrafo(self):
-        return self.vertices, self.aristas
-    
     def click(self,e):
         v = self.buscarVertice(e.x,e.y)
         if  v is None:
@@ -126,6 +124,51 @@ class Grafo:
                 return v
 
         return None
+
+    def entregarGrafo(self):
+        resultado = logica.analizar(
+            self.vertices,
+            self.aristas
+        )
+
+        texto = "RESULTADO"
+
+        texto += f"V = {self.vertices}\n"
+        texto += f"A = {self.aristas}\n\n"
+
+        texto += f"M = {resultado['M']}\n\n"
+
+        texto += (
+            f"Emparejamiento: "
+            f"{resultado['emparejamiento']}\n"
+        )
+
+        texto += (
+            f"Maximal: "
+            f"{resultado['esMaximal']}\n"
+        )
+
+        texto += (
+            f"Máximo: "
+            f"{resultado['esMaximo']}\n"
+        )
+
+        texto += (
+            f"Perfecto: "
+            f"{resultado['esPerfecto']}\n"
+        )
+
+        resultado_ventana = tk.Toplevel()
+        resultado_ventana.title("Resultado")
+
+        tk.Label(
+            resultado_ventana,
+            text=texto,
+            justify="left",
+            padx=20,
+            pady=20
+        ).pack()
+    
               
 ventana = tk.Tk()
 ventana.title("Proyecto de Grafos")
