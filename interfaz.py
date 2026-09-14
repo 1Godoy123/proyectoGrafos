@@ -103,9 +103,30 @@ class Grafo:
 
     def entregarGrafo(self):
         return self.vertices, self.aristas
+    
     def click(self,e):
-        return self.entrada.get()
+        v = self.buscarVertice(e.x,e.y)
+        if  v is None:
+            return
+        if self.sel is None:
+            self.sel = v
+        else: 
+            if self.sel != v:
+                arista = (self.sel,v)
+                if (arista not in self.aristas 
+                and (v,self.sel) not in self.aristas):
+                    self.aristas.append(arista)
+            self.sel = None
+        self.dibujarGrafo()
 
+    def buscarVertice(self,x,y):  
+        for v, (vx, vy) in self.pos.items():
+
+            if math.hypot(x - vx, y - vy) <= 20:
+                return v
+
+        return None
+              
 ventana = tk.Tk()
 ventana.title("Proyecto de Grafos")
 ventana.geometry("800x650")
