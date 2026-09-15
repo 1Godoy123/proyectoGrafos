@@ -1,22 +1,61 @@
 def analizar(vertices, aristas):
+    mejorCamino = []
 
-    M = encontrarMaximo(aristas)
+    buscar(
+        aristas,
+        0,
+        set(),
+        [],
+        mejorCamino
+    )
+
+    esPerfecto = perfecto(vertices, mejorCamino)
 
     return {
-        "M": M,
-        "emparejamiento": emparejamiento(M),
-        "esMaximal": esMaximal(aristas, M),
-        "esMaximo": True,
-        "esPerfecto": esPerfecto(vertices, M)
+        "maximo": mejorCamino,
+        "maximal": True,
+        "perfecto": esPerfecto
     }
 
-def encontrarMaximo(aristas):
-    return aristas
-def emparejamiento(M):
-    return True
-def esMaximal(aristas, M):
-    return True
-def esMaximo(aristas, M):
-    return True
-def esPerfecto(vertices, M):
-    return True
+
+def perfecto(vertices, camino):
+    return len(camino) * 2 == len(vertices)
+
+
+def maximo(actual, mejorCamino):
+    if len(actual) > len(mejorCamino):
+        mejorCamino.clear()
+        mejorCamino.extend(actual)
+
+
+def buscar(aristas, i, usados, actual, mejorCamino):
+    if i == len(aristas):
+        maximo(actual, mejorCamino)
+        return
+
+    u, v = aristas[i]
+
+    buscar(
+        aristas,
+        i + 1,
+        usados,
+        actual,
+        mejorCamino
+    )
+
+    if u not in usados and v not in usados:
+        usados.add(u)
+        usados.add(v)
+        actual.append((u, v))
+
+        buscar(
+            aristas,
+            i + 1,
+            usados,
+            actual,
+            mejorCamino
+        )
+
+        actual.pop()
+        usados.remove(u)
+        usados.remove(v)

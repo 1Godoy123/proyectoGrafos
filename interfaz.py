@@ -136,26 +136,20 @@ class Grafo:
         texto += f"V = {self.vertices}\n"
         texto += f"A = {self.aristas}\n\n"
 
-        texto += f"M = {resultado['M']}\n\n"
-
-        texto += (
-            f"Emparejamiento: "
-            f"{resultado['emparejamiento']}\n"
-        )
 
         texto += (
             f"Maximal: "
-            f"{resultado['esMaximal']}\n"
+            f"{resultado['maximal']}\n"
         )
 
         texto += (
             f"Máximo: "
-            f"{resultado['esMaximo']}\n"
+            f"{resultado['maximo']}\n"
         )
 
         texto += (
             f"Perfecto: "
-            f"{resultado['esPerfecto']}\n"
+            f"{resultado['perfecto']}\n"
         )
 
         resultado_ventana = tk.Toplevel()
